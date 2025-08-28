@@ -38,8 +38,7 @@ elif prioridad == 3:
 else:
     turno = "Prioridad inválida"
 
-print("")
-print(f"Nombre: {nombre_completo}")
+print(f"\nNombre: {nombre_completo}")
 print(f"DNI: {documento}")
 print(f"Edad: {edad}")
 print(f"Prioridad: {prioridad}")

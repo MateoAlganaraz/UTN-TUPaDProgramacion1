@@ -35,8 +35,7 @@ elif ingresos_mensuales >= 200000 and antiguedad_laboral >= 2:
     elif historial_num == 1:
         monto_aprobado = "$3.000.000"
 
-print("")
-print(f"Cliente: {nombre_completo}")
+print(f"\nCliente: {nombre_completo}")
 print(f"CUIT: {cuit}")
 print(F"Ingresos: {ingresos_mensuales}")
 print(f"Antigüedad: {antiguedad_laboral}")

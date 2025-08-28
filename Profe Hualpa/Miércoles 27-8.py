@@ -21,7 +21,7 @@ else:
     else:
         estudiante["resultado"] = "Rechazado"
 
-print(f"{estudiante['nombre']}, {estudiante['edad']} años")
+print(f"\n{estudiante['nombre']}, {estudiante['edad']} años")
 print(f"Promedio: {estudiante['promedio']}")
 print(f"Ingresos: {estudiante['ingresos']}")
 print(f"Resultado: {estudiante['resultado']}")

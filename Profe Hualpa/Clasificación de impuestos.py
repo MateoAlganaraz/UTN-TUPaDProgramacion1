@@ -15,8 +15,7 @@ if edad > 65:
     a_pagar = a_pagar/2
     print("Descuento del 50% por ser mayor de 65 años")
 
-print("")
-print(f"Nombre: {nombre_completo}")
+print(f"\nNombre: {nombre_completo}")
 print(f"Edad: {edad}")
 print(f"Ingresos anuales: {ingresos:,.2f}")
 print(f"Impuesto final: {a_pagar:,.2f}")
