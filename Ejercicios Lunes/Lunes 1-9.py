@@ -15,6 +15,7 @@ for i in range(5):
             resultado += abecedario[nuevo_indice]
         else:
             resultado += letra
+            #.append sirve para agregar un elemento al final de una lista existente
     mensajes_encriptados.append(resultado)
     
 print("\nmensajes encriptados: ")
