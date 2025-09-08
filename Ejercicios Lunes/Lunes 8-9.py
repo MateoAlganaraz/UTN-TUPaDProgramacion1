@@ -40,7 +40,7 @@ def jugar_bingo():
             numero = random.randint(1,50)
         numeros_sorteados.add(numero)
         
-        print(f"Número sorteado: {numero}")
+        print(f"Se sortea el número: {numero}")
     
         encontrado = False
         for i in range(5):
