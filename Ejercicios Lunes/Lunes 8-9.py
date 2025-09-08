@@ -58,6 +58,7 @@ def jugar_bingo():
         
         #Revisar líneas solo si no estaban marcadas antes, para que el mensaje de linea completada 
         #se muestre una vez cada vez que se completa una fila
+        #enumerate() lo que hace es que recorre cualquier iterable y devuelve el índice y el valor
         for i,fila in enumerate(carton):
             if i not in lineas_marcadas and all(n==0 for n in fila):
                 print("¡LINEA!")
