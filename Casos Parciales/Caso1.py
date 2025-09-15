@@ -8,7 +8,7 @@ while True:
     if opcion == 1:
         n = int(input("Cuántos títulos quiere ingresar: "))
         for i in range(n):
-            titulo = (input(f"Ingrese el nombre del libro {i+1}: "))
+            titulo = (input(f"Ingrese el nombre del libro {i+1}: ")).lower()
             titulos.append(titulo)
             ejemplares.append(0)
 
@@ -17,20 +17,20 @@ while True:
             print("Primero ingrese los títulos (opción 1)")
         else: 
             for i in range (len(titulos)):
-                ejemplares[i] = input(f"Ingrese la cantidad de ejemplares para '{titulos[i]}': ")
+                ejemplares[i] = int(input(f"Ingrese la cantidad de ejemplares para '{titulos[i]}': "))
                 
     elif opcion == 3:
         if not titulos:
             print("Catálogo vacío.")
         else: 
             for i in range (len(titulos)):
-                print(f"{titulos[i]}: {ejemplares[i]} copias")
+                    print(f"'{titulos[i]}': {ejemplares[i]} copias")
 
     elif opcion == 4:
         if not titulos:
             print("Catálogo vacío.")
         else: 
-            buscar = input("Ingrese el título a buscar: ")
+            buscar = input("Ingrese el título a buscar: ").lower()
             if buscar in titulos: 
                 indice = titulos.index(buscar)
                 print(f"'{buscar}' {ejemplares[indice]} copias disponibles.")
@@ -39,9 +39,12 @@ while True:
 
     elif opcion == 5: 
         agotados = []
-        for i in range (len(titulos)):
-            if ejemplares[i] == 0:
-                agotados += [titulos[i]]
+        if not titulos:
+            print("Catálogo vacío.")
+        else:
+            for i in range (len(titulos)):
+                if ejemplares[i] == 0:
+                    agotados.append(titulos[i])
 
             if agotados:
                 print("\nLibros agotados: ")
@@ -51,7 +54,7 @@ while True:
                 print("Todos los libros tienen copias disponibles.")
 
     elif opcion == 6:
-        nuevo_titulo = input("Ingrese el nuevo título: ")
+        nuevo_titulo = input("Ingrese el nuevo título: ").lower()
         if nuevo_titulo in titulos:
             print("Este título ya está ingresado.")
         else:
@@ -64,34 +67,44 @@ while True:
         if not titulos:
             print("Catálogo vacío.")
         else: 
-            movimiento = input("Desea prestar (p) o devolver (d) un libro?")
-            titulo_a_buscar = input("Ingrese el nombre del libro: ")
-            indice = titulos.index(titulo_a_buscar)
+            movimiento = input("Desea prestar (p) o devolver (d) un libro?: ").lower()
+            titulo_a_buscar = input("Ingrese el nombre del libro: ").lower()
 
-            if movimiento == "p":
-                if titulo_a_buscar in titulos:
-                    if ejemplares[indice] == 0:
-                        print("Este libro no se puede prestar")
-                    else:
+            if titulo_a_buscar in titulos:
+                indice = titulos.index(titulo_a_buscar)
+                if movimiento == "p":
+                    if ejemplares[indice] > 0:
                         ejemplares[indice] -= 1
-                else:
-                    print("Éste libro no se encuentra disponible")
-
-            else:
-                if titulo_a_buscar in titulos:
+                        print(f"Préstamo realizado. Quedan {ejemplares[indice]} ejemplares de '{titulo_a_buscar}'.")
+                    else:
+                        print("Este libro no se puede prestar ya que no tiene ejemplares disponibles")
+                elif movimiento == "d":
                     ejemplares[indice] += 1
+                    print(f"Devolución realizada. Ahora hay {ejemplares[indice]} ejemplares de '{titulo_a_buscar}'.")
                 else: 
-                    print("Éste libro no se encuentra disponible.")
+                    print("Opción inválida.")
+            else:
+                print("Título no encontrado.")
 
-#Mostrar solo con stock disponible
     elif opcion == 8:
         if not titulos:
             print("Catálogo vacío.")
         else:
             print("\n Catálogo completo:")
-            for titulo in titulos:
-                print("-", titulo)
+            #Agrego la variable 'disponibles' para el if not de abajo 
+            # porque con un if-else me mostraba el mensaje de 'ningún libro tiene ejemplares disponibles' cada vez que encontraba un libro con 0 ejemplares
+            disponibles = False
+            for i in range(len(titulos)):
+                if ejemplares[i] > 0:
+                    print(f"- {titulos[i]}")
+                    disponibles = True
 
+            if not disponibles:
+                print("Ningún libro tiene ejemplares disponibles.")
+                
     elif opcion == 9: 
         print("Saliendo del sistema...")
         break
+
+    else:
+        print("Opción inválida. Intente nuevamente.")
