@@ -14,7 +14,7 @@ while True:
             especialidades.append(especialidad)
             cupos.append(0)
 
-    if opcion == 2:
+    if opcion == 2: 
         if not especialidad:
             print("Primero ingrese las especialidades (opción 1)")
         else: 
