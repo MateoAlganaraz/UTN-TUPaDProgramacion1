@@ -14,8 +14,7 @@ while True:
                 while True:
                     num_tarjeta = input(f"Ingrese el número de la tarjeta {i+1}: ")
 
-                    #CAMBIAR EL 3 POR 16
-                    if len(num_tarjeta) == 3 and num_tarjeta.isdigit():
+                    if len(num_tarjeta) == 16 and num_tarjeta.isdigit():
                         tarjetas.append(num_tarjeta)
                         saldos.append(0.0)
                         print(f"Tarjeta registrada correctamente")
@@ -70,7 +69,7 @@ while True:
             print("Ésta tarjeta ya está ingresada.")
             continue
         else:
-            if len(tarjeta_nueva) == 3 and tarjeta_nueva.isdigit():
+            if len(tarjeta_nueva) == 6 and tarjeta_nueva.isdigit():
                 tarjetas.append(tarjeta_nueva)
                 saldo_tarjeta_nueva = float(input("Ingrese el saldo de la tarjeta nueva: "))
                 saldos.append(saldo_tarjeta_nueva)
@@ -89,29 +88,40 @@ while True:
             else:
                 movimiento = input("pulse 'c' para cargar o 'd' para debitar: ").lower()
                 indice = tarjetas.index(tarjeta_a_modificar)
-                #Mejorar los bucles para que no se generen bucles infinitos
+                
                 if movimiento == "c":
                     while True:
-                        carga = float(input(f"Cuánto saldo desea cargarle a la tarjeta '{tarjeta_a_modificar}': "))
-                        if carga < 1:
-                            print("No puede cargarle un saldo negativo.")
+                        carga_str = input(f"Cuánto saldo desea cargarle a la tarjeta '{tarjeta_a_modificar}': ")
+
+                        if carga_str.isdigit():
+                            carga = float(carga_str)
+                            if carga > 0:
+                                saldos[indice] += carga
+                                print(f"Carga realizada con éxito. Su saldo nuevo es de ${saldos[indice]}.")
+                                break
                         else:
-                            saldos[indice] += carga
-                            print(f"Carga realizada con éxito. Su saldo nuevo es de ${saldos[indice]}.")
-                            break
+                            print("Ingrese sólo números postivos.")
 
                 elif movimiento == "d":
-                    debito = float(input(f"Cuándo saldo desea debitar de la tarjeta '{tarjeta_a_modificar}'?: "))
+                    
                     while True:
-                        if debito < 1:
-                            print("Por favor ingrese un saldo positivo.")
-                        else:
-                            if debito > saldos[indice]:
+
+                        debito_str = input(f"Cuándo saldo desea debitar de la tarjeta '{tarjeta_a_modificar}'?: ")
+
+                        if debito_str.isdigit():
+                            debito = float(debito_str)
+                            if debito <= 0:
+                                print("Por favor ingrese un saldo positivo.")
+                                continue
+                            elif debito > saldos[indice]:
                                 print("No puede dejar su tarjeta en negativo.")
+                                continue
                             else:
                                 saldos[indice] -= debito
                                 print(f"Débito hecho con éxito. Su saldo nuevo es de ${saldos[indice]}.")
                                 break
+                        else:
+                            print("Ingrese sólo números")
 
                 else:
                     print("Opción inválida.")
@@ -125,6 +135,7 @@ while True:
             for i in range(len(tarjetas)):
                 if saldos[i] < 1:
                     saldos_negativos.append(saldos[i])
+                    print("No hay tarjetas con saldo positivo.")
                 else:
                     print(f"Tarjeta '{tarjetas[i]}' tiene ${saldos[i]}")
 
