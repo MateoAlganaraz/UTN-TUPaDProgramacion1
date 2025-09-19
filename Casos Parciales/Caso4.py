@@ -8,7 +8,7 @@ while True:
     if opcion == 1:
         cantidad_clases = int(input("Cuántas clases desea ingresar?: "))
         for i in range(cantidad_clases):
-            clase = input(f"Ingrese el nombre de la clase {i+1}: ")
+            clase = input(f"Ingrese el nombre de la clase {i+1}: ").lower()
             clases.append(clase)
             cupos.append(0)
             
@@ -19,7 +19,13 @@ while True:
             print("Primero ingrese las clases. (Opción 1).")
         else: 
             for i in range(len(clases)):
-                cupos[i] = int(input(f"Ingrese los cupos disponibles para la clase '{clases[i]}': "))
+                cupo = -1
+                while cupo < 0:
+                    cupo = int(input(f"Ingrese los cupos disponibles para la clase '{clases[i]}': "))
+                    if cupo < 0:
+                        print("Error: Los cupos no pueden ser negativos, intente nuevamente.")
+
+                cupos[i] = cupo
 
 
     elif opcion == 3:
@@ -33,7 +39,7 @@ while True:
         if not clases:
             print("Todavía no hay clases ingresadas.")
         else:
-            clase_a_buscar = input("Ingrese el nombre de la clase: ")
+            clase_a_buscar = input("Ingrese el nombre de la clase: ").lower()
             if clase_a_buscar not in clases:
                 print("Ésta clase no ha sido ingresada todavía.")
             else:
@@ -56,12 +62,16 @@ while True:
                 print("Todas las clases tienen cupos disponibles.")
 
     elif opcion == 6:
-        clase_a_agregar = input("Ingrese el nombre de la clase que desea agregar: ")
+        clase_a_agregar = input("Ingrese el nombre de la clase que desea agregar: ").lower()
 
         if clase_a_agregar in clases:
             print("Ésta clase ya está ingresada. ")
         else:
-            cupos_clase_nueva = int(input(f"Cuántos cupos disponibles va a tener la clase '{clase_a_agregar}'?: "))
+            cupos_clase_nueva = -1
+            while cupos_clase_nueva < 0:
+                cupos_clase_nueva =int(input(f"Cuántos cupos disponibles va a tener la clase '{clase_a_agregar}'?: "))
+                if cupos_clase_nueva < 0:
+                    print("Error: Los cupos no pueden ser negativos. Intente nuevamente.")
 
             clases.append(clase_a_agregar)
             cupos.append(cupos_clase_nueva)
@@ -71,9 +81,9 @@ while True:
         if not clases:
             print("Primero ingrese una clase.")
         else:
-            movimiento = input("Pulse 'i' para inscribirse a una clase o 'c' para cancelar su turno: ")
+            movimiento = input("Pulse 'i' para inscribirse a una clase o 'c' para cancelar su turno: ").lower()
             if movimiento == "i":
-                clase_inscribirse = input("A qué clase le gustaría inscribirse?: ")
+                clase_inscribirse = input("A qué clase le gustaría inscribirse?: ").lower()
                 if clase_inscribirse not in clases:
                     print("Ésta clase no se encuentra entre las opciones.")
                 else: 
@@ -84,7 +94,7 @@ while True:
                         cupos[indice] -= 1
                         print("Inscripción realizada con éxito.")
             elif movimiento == "c":
-                cancelar_clase = input("De qué clase desea cancelar su turno?: ")
+                cancelar_clase = input("De qué clase desea cancelar su turno?: ").lower()
                 if cancelar_clase not in clases:
                     print("Ésta clase no se encuentra entre las opciones.")
                 else:
@@ -98,17 +108,11 @@ while True:
         if not clases:
             print("No hay clases ingresadas para mostrar.")
         else:
-            clases_a_mostrar = [] 
-            clases_llenas = []
+            clases_a_mostrar = False
             for i in range(len(clases)):
                 if cupos[i] > 0:
-                    clases_a_mostrar.append(clases[i])
-                else:
-                    clases_llenas.append(clases[i])
-            
-            #Mostrar nombres clases con turnos disponibles
-            for i in range(len(clases_a_mostrar)):
-                print("-",clases_a_mostrar[i])
+                    print(f"- {clases[i]}")
+                    clases_a_mostrar = True
 
     elif opcion == 9:
         print("Saliendo del sistema...")
