@@ -3,7 +3,15 @@ porciones = []
 
 while True:
     print("\nBienvenido al menú del restaurante")
-    opcion = int(input("Opción 1: Registrar los platos del día. \nOpción 2: Ingresar porciones disponibles. \nOpción 3: Mostrar platos y sus porciones. \nOpción 4: Consultar porciones de un plato. \nOpción 5: Listar platos agotados. \nOpción 6: Agregar plato. \nOpción 7: Vender/Devolver porciones. \nOpción 8: Ver los platos con porciones disponibles. \nOpción 9: Salir \nElija una opción: "))
+    print("Opción 2: Ingresar porciones disponibles.")
+    print("Opción 3: Mostrar platos y sus porciones")
+    print("Opción 4: Consultar porciones de un plato.")
+    print("Opción 5: Listar platos agotados.")
+    print("Opción 6: Agregar plato.")
+    print("Opción 7: Vender/Devolver porciones.")
+    print("Opción 8: Ver los platos con porciones disponibles.")
+    print("Opción 9: Salir")
+    opcion = int(print("Elija una opción: "))
 
     if opcion == 1:
         cantidad_platos = int(input("Cuántos platos desea ingresar?: "))
@@ -55,10 +63,7 @@ while True:
             agotados = []
             for i in range(len(platos)):
                 if porciones[i] == 0:
-                    agotados.append(platos[i])
-
-            for plato in agotados:
-                print(f"- {plato}")
+                    print(f"- {platos[i]}")
 
     elif opcion == 6:
         plato_a_ingresar = input("Ingrese el nombre del plato nuevo: ").lower()
@@ -131,14 +136,11 @@ while True:
             agotados = []
             
             for i in range(len(platos)):
-                if platos[i] > 0:
-                    platos_a_mostrar.append(platos[i])
+                if porciones[i] > 0:
+                    print(f"- {platos[i]}")
                 else:
                     agotados.append(platos[i])
-
-            for plato in platos_a_mostrar:
-                print(f"- {plato}")
-
+                
     elif opcion == 9:
         print("Saliendo del sistema...")
         break
