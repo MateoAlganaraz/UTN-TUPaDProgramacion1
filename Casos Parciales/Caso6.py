@@ -8,7 +8,7 @@ while True:
     print("Opción 3: Mostrar las entradas disponibles para cada show.")
     print("Opción 4: Consultar entradas de un show.")
     print("Opción 5: Listar shows agotados.")
-    print("Opción 6: Agregar show.")
+    print("Opción 6: Agregar show.") 
     print("Opción 7: Actualizar entradas (vender/devolver).")
     print("Opción 8: Ver los shows disponibles.")
     print("Opción 9: Salir.")
@@ -74,12 +74,12 @@ while True:
             if agotados:
                 for show in agotados:
                     print(f"- {show}")
-
             else:
                 print("Todos los shows tienen entradas disponibles.")
 
     elif opcion == 6:
         show_a_agregar = input("Ingrese el título del show que quiere agregar: ").capitalize()
+
         if show_a_agregar in shows:
             print("Éste título ya está ingresado.")
         else:
@@ -102,6 +102,7 @@ while True:
 
             if movimiento == "d":
                 show_a_devolver = input("De qué show desea devolver las entradas?: ").capitalize()
+                
                 if show_a_devolver not in shows:
                     print("Éste show no ha sido ingresado.")
                 else:
