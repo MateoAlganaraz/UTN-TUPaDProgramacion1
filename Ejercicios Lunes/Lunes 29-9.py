@@ -17,6 +17,8 @@ def jugar_ahorcado():
 
     while intentos > 0:
         print("\nPalabra: ",mostrar_tablero(palabra_secreta, letras_adivinadas))
+        print("Letras usadas: ", " ".join(sorted(letras_adivinadas)) if letras_adivinadas else "Ninguna por ahora.")
+        
         letra = input("Adivina una letra: ").lower()
 
         if len(letra) != 1 or not letra.isalpha():
