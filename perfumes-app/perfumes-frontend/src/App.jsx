@@ -29,7 +29,7 @@ function App() {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h1>🌟 Catálogo de Perfumes</h1>
+      <h1>🌟 Catálogo de perfumes nova imports</h1>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
         {perfumes.map(perfume => (
           <div
