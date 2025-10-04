@@ -10,17 +10,21 @@ export default function AdminDashboard() {
   const [nuevoStock, setNuevoStock] = useState('');
   const navigate = useNavigate();
 
+  // Verifica si el usuario está logueado
   useEffect(() => {
-    // Verifica si el usuario está logueado
     if (!localStorage.getItem('isAdmin')) {
       navigate('/admin');
     }
 
     fetch('http://localhost:3000/api/perfumes')
       .then(res => res.json())
-      .then(data => setPerfumes(data))
-      .catch(err => console.error("Error al cargar perfumes:", err));
+      .then(data => setPerfumes(data));
   }, [navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('isAdmin');
+    navigate('/');
+  };
 
   const handleAgregarPerfume = async (e) => {
     e.preventDefault();
@@ -29,99 +33,64 @@ export default function AdminDashboard() {
       descripcion: nuevaDescripcion,
       precio: parseFloat(nuevoPrecio),
       stock: parseInt(nuevoStock),
-      imagen: "/images/placeholder.jpg" // ← Placeholder por ahora
+      imagen: "/images/placeholder.jpg"
     };
 
-    try {
-      const response = await fetch('http://localhost:3000/api/perfumes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(nuevoPerfume)
-      });
+    const res = await fetch('http://localhost:3000/api/perfumes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(nuevoPerfume)
+    });
 
-      if (response.ok) {
-        alert('Perfume agregado correctamente');
-        setNuevoNombre('');
-        setNuevaDescripcion('');
-        setNuevoPrecio('');
-        setNuevoStock('');
-        // Recarga la lista
-        const updated = await fetch('http://localhost:3000/api/perfumes').then(r => r.json());
-        setPerfumes(updated);
-      }
-    } catch (err) {
-      console.error(err);
-      alert('Error al agregar perfume');
+    if (res.ok) {
+      alert('Perfume agregado');
+      const updated = await fetch('http://localhost:3000/api/perfumes').then(r => r.json());
+      setPerfumes(updated);
+      // Limpiar form
+      setNuevoNombre('');
+      setNuevaDescripcion('');
+      setNuevoPrecio('');
+      setNuevoStock('');
     }
   };
 
   const handleActualizarStock = async (id, nuevoStock) => {
-    try {
-      const response = await fetch(`http://localhost:3000/api/perfumes/${id}/stock`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cantidad: parseInt(nuevoStock) - getStock(id) })
-      });
+    const res = await fetch(`http://localhost:3000/api/perfumes/${id}/stock`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cantidad: parseInt(nuevoStock) })
+    });
 
-      if (response.ok) {
-        alert('Stock actualizado');
-        // Recarga la lista
-        const updated = await fetch('http://localhost:3000/api/perfumes').then(r => r.json());
-        setPerfumes(updated);
-      }
-    } catch (err) {
-      console.error(err);
-      alert('Error al actualizar stock');
+    if (res.ok) {
+      alert('Stock actualizado');
+      const updated = await fetch('http://localhost:3000/api/perfumes').then(r => r.json());
+      setPerfumes(updated);
     }
-  };
-
-  const getStock = (id) => {
-    const perfume = perfumes.find(p => p.id === id);
-    return perfume ? perfume.stock : 0;
   };
 
   return (
     <div style={{ padding: '20px' }}>
-      <h2>📊 Panel de Administrador</h2>
-      <button onClick={() => navigate('/')}>Volver al catálogo</button>
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h2>👨‍💼 Panel de Administrador</h2>
+        <button onClick={handleLogout} style={{ padding: '8px 16px', backgroundColor: '#f44336', color: 'white', border: 'none', borderRadius: '4px' }}>
+          Cerrar sesión
+        </button>
+      </header>
+
+      <button onClick={() => navigate('/')} style={{ marginBottom: '20px' }}>
+        👀 Ver catálogo público
+      </button>
 
       <h3>➕ Agregar nuevo perfume</h3>
-      <form onSubmit={handleAgregarPerfume} style={{ marginBottom: '20px' }}>
-        <input
-          placeholder="Nombre"
-          value={nuevoNombre}
-          onChange={(e) => setNuevoNombre(e.target.value)}
-          required
-          style={{ margin: '5px', padding: '8px' }}
-        />
-        <input
-          placeholder="Descripción"
-          value={nuevaDescripcion}
-          onChange={(e) => setNuevaDescripcion(e.target.value)}
-          required
-          style={{ margin: '5px', padding: '8px' }}
-        />
-        <input
-          placeholder="Precio"
-          value={nuevoPrecio}
-          onChange={(e) => setNuevoPrecio(e.target.value)}
-          type="number"
-          step="0.01"
-          required
-          style={{ margin: '5px', padding: '8px' }}
-        />
-        <input
-          placeholder="Stock"
-          value={nuevoStock}
-          onChange={(e) => setNuevoStock(e.target.value)}
-          type="number"
-          required
-          style={{ margin: '5px', padding: '8px' }}
-        />
-        <button type="submit" style={{ margin: '5px', padding: '8px' }}>Agregar</button>
+      <form onSubmit={handleAgregarPerfume} style={{ marginBottom: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+        <input placeholder="Nombre" value={nuevoNombre} onChange={e => setNuevoNombre(e.target.value)} required />
+        <input placeholder="Descripción" value={nuevaDescripcion} onChange={e => setNuevaDescripcion(e.target.value)} required />
+        <input placeholder="Precio" type="number" step="0.01" value={nuevoPrecio} onChange={e => setNuevoPrecio(e.target.value)} required />
+        <input placeholder="Stock" type="number" value={nuevoStock} onChange={e => setNuevoStock(e.target.value)} required />
+        <button type="submit">Agregar</button>
       </form>
 
-      <h3>📦 Lista de perfumes</h3>
+      <h3>📦 Lista de perfumes (editable)</h3>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
         {perfumes.map(perfume => (
           <div key={perfume.id} style={{
@@ -133,14 +102,15 @@ export default function AdminDashboard() {
             <h4>{perfume.nombre}</h4>
             <p>{perfume.descripcion}</p>
             <p><strong>Precio:</strong> ${perfume.precio}</p>
-            <p><strong>Stock actual:</strong> {perfume.stock}</p>
-            <input
-              type="number"
-              defaultValue={perfume.stock}
-              onChange={(e) => handleActualizarStock(perfume.id, e.target.value)}
-              style={{ width: '80px', margin: '5px' }}
-            />
-            <button onClick={() => handleActualizarStock(perfume.id, document.querySelector(`[data-id="${perfume.id}"]`)?.value)} style={{ margin: '5px' }}>Actualizar</button>
+            <div>
+              <label>Stock:</label>
+              <input
+                type="number"
+                defaultValue={perfume.stock}
+                onChange={(e) => handleActualizarStock(perfume.id, e.target.value)}
+                style={{ width: '80px', margin: '5px' }}
+              />
+            </div>
           </div>
         ))}
       </div>
