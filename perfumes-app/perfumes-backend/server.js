@@ -51,17 +51,34 @@ app.get('/api/perfumes/:id', (req, res) => {
   res.json(perfume);
 });
 
-// Endpoint: Actualizar stock (simulación)
+// Endpoint: Agregar nuevo perfume
+app.post('/api/perfumes', (req, res) => {
+  const { nombre, descripcion, precio, stock, imagen } = req.body;
+
+  const nuevoPerfume = {
+    id: perfumes.length + 1,
+    nombre,
+    descripcion,
+    precio,
+    stock,
+    imagen: imagen || "/images/placeholder.jpg"
+  };
+
+  perfumes.push(nuevoPerfume);
+  res.status(201).json(nuevoPerfume);
+});
+
+// Endpoint: Actualizar stock (ya lo tenías, pero lo mejoramos)
 app.patch('/api/perfumes/:id/stock', (req, res) => {
   const id = parseInt(req.params.id);
-  const { cantidad } = req.body;
+  const { cantidad } = req.body; // cantidad es el nuevo stock total (no delta)
 
   const perfume = perfumes.find(p => p.id === id);
   if (!perfume) {
     return res.status(404).json({ error: "Perfume no encontrado" });
   }
 
-  perfume.stock += cantidad; // Sumar o restar (si cantidad es negativo, reduce stock)
+  perfume.stock = parseInt(cantidad); // Asigna directamente el nuevo stock
   res.json(perfume);
 });
 
