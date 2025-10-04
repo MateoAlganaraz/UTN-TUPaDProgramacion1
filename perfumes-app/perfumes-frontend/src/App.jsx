@@ -1,35 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [perfumes, setPerfumes] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/perfumes')
+      .then(res => res.json())
+      .then(data => setPerfumes(data))
+      .catch(err => console.error("Error al cargar perfumes:", err));
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="App">
+      <h1>🌟 Catálogo de Perfumes</h1>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+        {perfumes.map(perfume => (
+          <div key={perfume.id} style={{
+            border: '1px solid #ccc',
+            padding: '15px',
+            borderRadius: '8px',
+            width: '250px'
+          }}>
+            <img src={perfume.imagen} alt={perfume.nombre} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+            <h3>{perfume.nombre}</h3>
+            <p>{perfume.descripcion}</p>
+            <p><strong>Precio:</strong> ${perfume.precio}</p>
+            <p>
+              <strong>Stock:</strong> 
+              <span style={{ color: perfume.stock > 0 ? 'green' : 'red' }}>
+                {perfume.stock > 0 ? `${perfume.stock} disponibles` : 'AGOTADO'}
+              </span>
+            </p>
+          </div>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
