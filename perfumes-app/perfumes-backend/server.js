@@ -32,7 +32,7 @@ let perfumes = [
     descripcion: "Frescura marina y cítrica.",
     precio: 65.50,
     stock: 0, // Sin stock
-    imagen: "https://via.placeholder.com/200x200?text=Ocean+Breeze"
+    imagen: "c:\Users\cinti\OneDrive\Desktop\MATU\Matu UTN\descarga.jpeg"
   }
 ];
 
