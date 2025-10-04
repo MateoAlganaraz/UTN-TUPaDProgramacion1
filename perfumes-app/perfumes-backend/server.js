@@ -16,7 +16,7 @@ let perfumes = [
     descripcion: "Fragancia floral fresca.",
     precio: 89.99,
     stock: 15,
-    imagen: "https://via.placeholder.com/200x200?text=Eau+de+Parfum"
+    imagen: "/images/Eau-de-perfum.jpg"
   },
   {
     id: 2,
@@ -24,7 +24,7 @@ let perfumes = [
     descripcion: "Notas de madera y especias.",
     precio: 120.00,
     stock: 5,
-    imagen: "https://via.placeholder.com/200x200?text=Musk+Noir"
+    imagen: "/images/Musc-Noir.jpg"
   },
   {
     id: 3,
@@ -32,7 +32,7 @@ let perfumes = [
     descripcion: "Frescura marina y cítrica.",
     precio: 65.50,
     stock: 0, // Sin stock
-    imagen: "/Ocean-Breeze.jpg"
+    imagen: "/images/Ocean-Breeze.jpg"
   }
 ];
 
