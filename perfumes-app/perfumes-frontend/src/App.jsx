@@ -45,7 +45,7 @@ function App() {
             <img
               src={perfume.imagen}
               alt={perfume.nombre}
-              style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '4px' }}
+              style={{ width: '100%', height: '200px', objectFit: 'cover'}}
             />
             <h3>{perfume.nombre}</h3>
             <p>{perfume.descripcion}</p>
