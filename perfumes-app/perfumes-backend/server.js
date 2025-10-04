@@ -24,7 +24,7 @@ let perfumes = [
     descripcion: "Notas de madera y especias.",
     precio: 120.00,
     stock: 5,
-    imagen: "/images/Musca-Noir.jpeg"
+    imagen: "/images/Musca-noir.jpeg"
   },
   {
     id: 3,
@@ -32,7 +32,7 @@ let perfumes = [
     descripcion: "Frescura marina y cítrica.",
     precio: 65.50,
     stock: 0, // Sin stock
-    imagen: "/images/Ocean-Breeze.jpeg"
+    imagen: "/images/Ocean-breeze.jpeg"
   }
 ];
 
