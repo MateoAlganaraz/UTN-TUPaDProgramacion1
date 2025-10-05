@@ -8,7 +8,7 @@ export default function AdminLogin() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password === 'admin123') { // ← Contraseña simple (cambia esto luego)
+    if (password === 'admin123') { // ← Cambia esto en producción
       localStorage.setItem('isAdmin', 'true');
       navigate('/admin/dashboard');
     } else {
@@ -29,6 +29,9 @@ export default function AdminLogin() {
         />
         <button type="submit" style={{ padding: '8px 16px' }}>Ingresar</button>
       </form>
+      <p style={{ marginTop: '20px' }}>
+        <a href="/" style={{ color: '#4CAF50' }}>← Volver al catálogo</a>
+      </p>
     </div>
   );
 }

@@ -20,7 +20,7 @@ function App() {
   return (
     <div style={{ padding: '20px' }}>
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1>✨ Perfumería "El Aroma Perfecto"</h1>
+        <h1>✨ Catálogo de perfumes de Nova Imports</h1>
         <Link to="/admin" style={{ padding: '8px 16px', backgroundColor: '#4CAF50', color: 'white', textDecoration: 'none', borderRadius: '4px' }}>
           🔐 Admin
         </Link>

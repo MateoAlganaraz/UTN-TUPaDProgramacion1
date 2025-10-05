@@ -27,3 +27,37 @@ app.patch('/api/perfumes/:id/stock', (req, res) => {
   perfume.stock = parseInt(cantidad);
   res.json(perfume);
 });
+
+// PUT: actualizar perfume (nombre, descripción, precio, stock)
+app.put('/api/perfumes/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const { nombre, descripcion, precio, stock } = req.body;
+
+  const index = perfumes.findIndex(p => p.id === id);
+  if (index === -1) {
+    return res.status(404).json({ error: "Perfume no encontrado" });
+  }
+
+  perfumes[index] = {
+    ...perfumes[index],
+    nombre,
+    descripcion,
+    precio: parseFloat(precio),
+    stock: parseInt(stock)
+  };
+
+  res.json(perfumes[index]);
+});
+
+// DELETE: eliminar perfume
+app.delete('/api/perfumes/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = perfumes.findIndex(p => p.id === id);
+  
+  if (index === -1) {
+    return res.status(404).json({ error: "Perfume no encontrado" });
+  }
+
+  perfumes.splice(index, 1);
+  res.status(204).send(); // No content
+});
