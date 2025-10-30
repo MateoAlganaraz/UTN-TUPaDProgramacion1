@@ -1,11 +1,8 @@
 import csv
 import os
 
-# --- Constantes ---
 NOMBRE_ARCHIVO = 'Casos Parciales/inventario.csv'
 CAMPOS = ['nombre', 'stock', 'precio']
-
-# --- Funciones de Utilidad y Archivo ---
 
 def inicializar_inventario():
     """
