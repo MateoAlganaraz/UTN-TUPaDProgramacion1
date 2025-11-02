@@ -1,6 +1,6 @@
 import csv
 import os
-
+ 
 NOMBRE_ARCHIVO = 'Casos Parciales/inventario.csv'
 CAMPOS = ['nombre', 'stock', 'precio']
 
