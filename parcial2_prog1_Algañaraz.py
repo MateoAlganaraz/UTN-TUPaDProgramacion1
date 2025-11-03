@@ -246,4 +246,4 @@ def main():
             print("Por favor ingrese un número.")
 
 if __name__ == '__main__':
-    main() 
+    main()
